@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생성적리스트</title>
+</head>
+<body>
+    <h2>학생성적리스트</h2>
+    {% if list %}
+        {% for s in list %}
+            {{s.no}}, {{s.name}}, {{s.kor}}, {{s.eng}}, {{s.math}}, {{s.total}}, {{s.avg}} <br>
+            {% endfor %}
+    {% else %}
+    {% endif %}
+</body>
+</html>
