@@ -71,7 +71,7 @@
     <h1>관리자 글쓰기</h1>
     <hr>
 
-    <form action="/board/write/" name="writeFrm" method="post">
+    <form action="/board/write/" name="writeFrm" method="post" enctype='multipart/form-data'>
       {% csrf_token %}
       <table>
         <colgroup>

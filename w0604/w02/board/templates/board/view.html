@@ -5,10 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700,900&display=swap&subset=korean" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/read.css">
+  <script>
+    function deleteBtn(){
+      if(confirm('정말 삭제하시겠습니까?')){
+        alert('삭제가 완료되었습니다.');
+        location.href = '/board/delete/{{board.bno}}/';
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -64,6 +73,12 @@
         <td class="article" colspan='2'>{{board.bcontent}}</td>
       </tr>
       <tr>
+        <td class="article" colspan='2'>
+        <strong>이미지</strong> <span class="separator">|</span> 
+        <img src='/media/{{board.bfile}}' width='400px'>
+        </td>
+      </tr>
+      <tr>
         <td colspan='2'><strong>다음글</strong> <span class="separator">|</span> [키즈잼] 2월 프로그램 안내</td>
       </tr>
       <tr>
@@ -72,7 +87,7 @@
     </table>
 
     <a href='/board/list/'><div class="list">목록</div></a>
-    <div class="list">삭제</div>
+    <div class="list" onclick='deleteBtn()'>삭제</div>
     <a href='{% url "board:update" board.bno %}'><div class="list">수정</div></a>
   </section>
 

@@ -15,7 +15,7 @@ def write(request):
         id = request.POST.get('id')
         btitle = request.POST.get('btitle')
         bcontent = request.POST.get('bcontent')
-        bfile = request.POST.get('bfile')
+        bfile = request.FILES.get('bfile')
         print('데이터 : ', id, btitle, bcontent, bfile)
         
         qs = Board.objects.create(id=id, btitle=btitle, bcontent=bcontent, bfile=bfile)
@@ -41,12 +41,21 @@ def update(request, bno):
     elif request.method == 'POST':
         btitle = request.POST.get('btitle')
         bcontent = request.POST.get('bcontent')
-        bfile = request.POST.get('bfile')
+        bfile_pre = request.POST.get('bfile_pre','')
+        bfile = request.FILES.get('bfile','')
+        if not bfile:
+            bfile = bfile_pre
         
         qs = Board.objects.get(bno=bno)
         qs.btitle = btitle
         qs.bcontent = bcontent
+        qs.bfile = bfile
         qs.save()
         
         context = {'msg':1, 'board':qs}
         return render(request, 'board/update.html', context)
+    
+def delete(request, bno):
+    Board.objects.get(bno=bno).delete()
+    
+    return redirect('/board/list/')

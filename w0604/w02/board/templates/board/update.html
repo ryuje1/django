@@ -71,8 +71,9 @@
     <h1>관리자 글쓰기</h1>
     <hr>
 
-    <form action="/board/update/" name="updateFrm" method="post">
+    <form action="/board/update/{{board.bno}}/" name="updateFrm" method="post" enctype='multipart/form-data'>
       {% csrf_token %}
+      <input type='hidden' name='bfile_pre' value='{{board.bfile}}'>
       <table>
         <colgroup>
           <col width="15%">
@@ -81,25 +82,31 @@
         <tr>
           <th>작성자</th>
           <td>
-            <input type="text" name="id">
+            <input type="text" name="id" value='{{board.id}}'>
           </td>
         </tr>
         <tr>
           <th>제목</th>
           <td>
-            <input type="text" name="btitle" id="btitle">
+            <input type="text" name="btitle" id="btitle" value='{{board.btitle}}'>
           </td>
         </tr>
         <tr>
           <th>내용</th>
           <td>
-            <textarea name="bcontent" id="bcontent" cols="50" rows="10"></textarea>
+            <textarea name="bcontent" id="bcontent" cols="50" rows="10">{{board.bcontent}}</textarea>
           </td>
         </tr>
         <tr>
-          <th>이미지 표시</th>
+          <th>이미지 등록</th>
           <td>
             <input type="file" name="bfile" id="file">
+          </td>
+        </tr>
+        <tr>
+          <th>이미지</th>
+          <td>
+            {{board.bfile}}
           </td>
         </tr>
       </table>
