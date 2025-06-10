@@ -1,6 +1,6 @@
 from django.db import models
 from board.models import Board
-from board.models import Member
+from member.models import Member
 
 class Comment(models.Model):
     cno = models.AutoField(primary_key=True)                        # primary key가 있어야 에러 X
