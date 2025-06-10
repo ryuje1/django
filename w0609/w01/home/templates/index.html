@@ -164,7 +164,7 @@ $(document).ready(function() {
 			</div>
 			<div id="snb">
 				<ul>
-					{% if not request.session.session_id%}
+					{% if not request.session.session_id %}
 						<li><a href="/member/login/">LOGIN</a></li>
 						<li><a href="/member/step01/">JOIN</a></li>
 					{% else %}

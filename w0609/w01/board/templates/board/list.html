@@ -219,106 +219,32 @@ $(document).ready(function() {
 							<colgroup>
 							<col width="10%" class="tnone" />
 							<col width="*" />
-							<col width="14%" class="tw25" />
-							<col width="14%" class="tnone" />
+							<col width="13%" class="tw25" />
+							<col width="13%" class="tnone" />
+							<col width="13%" class="tnone" />
 							</colgroup>
 							<thead>
 								<th scope="col" class="tnone">NO.</th>
 								<th scope="col">제목</th>
+								<th scope="col">작성자</th>
 								<th scope="col">등록일</th>
 								<th scope="col" class="tnone">조회수</th>
 							</thead>
 							<tbody>
+								{% for board in list %}
 								<tr>
-									<td class="tnone">1</td>
+									<td class="tnone">{{board.bno}}</td>
 									<td class="left">
-										<a href="#">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-										<img src="/static/images/ico/ico_new.gif" alt="NEW" />
+										<a href="/board/view/{{board.bno}}/">
+											{% if board.ntchk >= 1 %}<strong style='color:#f7703c;'>[공지]</strong>{% endif %}
+											{{board.btitle}}
+										</a>
 									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
+									<td>{{board.member.id}}</td>
+									<td>{{board.bdate|date:'Y-m-d'}}</td>
+									<td class="tnone right">{{board.bhit}}</td>
 								</tr>
-
-								<tr>
-									<td class="tnone">2</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">3</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">4</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">5</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">6</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">7</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">8</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">9</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
-
-								<tr>
-									<td class="tnone">10</td>
-									<td class="left">
-										<a href="#" class="lightgray">쟈뎅 전문 쇼핑몰 쟈뎅샵이 리뉴얼 오픈합니다.</a>
-									</td>
-									<td>14-01-28</td>
-									<td class="tnone right">9999</td>
-								</tr>
+								{% endfor %}
 							</tbody>
 						</table>
 					</div>
@@ -326,18 +252,40 @@ $(document).ready(function() {
 
 
 					<div class="btnAreaList">
+						<div class="bwright">
+							<ul>
+								<li><a href="/board/write/" class="sbtnMini">글쓰기</a></li>
+							</ul>
+						</div>
 						<!-- 페이징이동1 -->
 						<div class="allPageMoving1">
-
-						<a href="#" class="n"><img src="/static/images/btn/btn_pre2.gif" alt="처음으로"/></a><a href="#" class="pre"><img src="/static/images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
-						<strong>1</strong>
-						<a href="#">2</a>
-						<a href="#">3</a>
-						<a href="#">4</a>
-						<a href="#">5</a>
-						<a href="#" class="next"><img src="/static/images/btn/btn_next1.gif" alt="뒤페이지로"/></a><a href="#" class="n"><img src="/static/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+						<!-- 첫페이지, 이전페이지 이동-->
+						{% if not list.has_previous %}
+						<a class="n"><img src="/static/images/btn/btn_pre2.gif" alt="처음으로"/></a>
+						<a class="pre"><img src="/static/images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
+						{% else %}
+						<a href="/board/list/?page=1" class="n"><img src="/static/images/btn/btn_pre2.gif" alt="처음으로"/></a>
+						<a href="/board/list/?page={{list.previous_page_number}}" class="pre"><img src="/static/images/btn/btn_pre1.gif" alt="앞페이지로"/></a>
+						{% endif %}
+						<!-- 순차적 페이지 -->
+						{% for i in list.paginator.page_range %}
+							{% if i == page %}
+								<strong>{{i}}</strong>
+							{% else %}
+								<a href="/board/list/?page={{i}}">{{i}}</a>
+							{% endif %}
+						{% endfor %}
+						<!-- 마지막페이지, 다음페이지 이동-->
+						{% if not list.has_next%}
+						<a class="next"><img src="/static/images/btn/btn_next1.gif" alt="뒤페이지로"/></a>
+						<a class="n"><img src="/static/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+						{% else %}
+						<a href="/board/list/?page={{list.next_page_number}}" class="next"><img src="/static/images/btn/btn_next1.gif" alt="뒤페이지로"/></a>
+						<a href="/board/list/?page={{list.paginator.num_pages}}" class="n"><img src="/static/images/btn/btn_next2.gif" alt="마지막페이지로"/></a>
+						{% endif %}
 
 						</div>
+						
 						<!-- //페이징이동1 -->
 					</div>
 

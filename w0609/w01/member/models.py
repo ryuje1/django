@@ -17,4 +17,5 @@ class Member(models.Model):
     mdate = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"{self.id}, {self.name}"
+        return f'{self.id}, {self.name}'
+

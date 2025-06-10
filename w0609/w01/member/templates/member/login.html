@@ -25,16 +25,17 @@
 <![endif]-->
 <script type="text/javascript">
 	if('{{msg}}' == '0'){
-		alert("아이디 또는 패스워드가 일치하지 않습니다. 다시 입력해주세요.");
+		alert("아이디 또는 패스워드가 일치하지 않습니다. 다시 로그인하세요.")
 	}
 	else if('{{msg}}' == '1'){
-		alert('로그인이 되었습니다.');
-		location.href = '/';
+		alert("로그인이 되었습니다.");
+		location.href= '/';
 	}
 	else if('{{msg}}' == '-1'){
-		alert('로그아웃되었습니다.');
-		location.href = '/';
+		alert("로그아웃 되었습니다.");
+		location.href = '/'
 	}
+
 	function loginBtn(){
 		loginFrm.submit();
 	}
@@ -224,24 +225,27 @@
 				<div id="member">
 					<h2><strong>로그인</strong><span>로그인 후 주문하시면 다양한 혜택을 받으실 수 있습니다.</span></h2>
 					<h3>회원 로그인</h3>
-					<form action='/member/login/' name='loginFrm' method='post'>
-						{% csrf_token %}
+					<form action="/member/login/" name='loginFrm' method='post'>
+					{% csrf_token %}
 					<div class="informbox">
 						<div class="inform">
 							<ul>
-								<li><input type="text" class="loginType" name='id' value='{{cook_id}}' onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
+								<li><input type="text" class="loginType" name='id' value='{{cook_id}}' onfocus="this.className='mfocus'"  onblur="if (this.value.length==0) {this.className='loginType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" onfocus /></li>
 								<li><input type="password" class="passType" name='pw' onfocus="this.className='mfocus'" onblur="if (this.value.length==0) {this.className='passType'}else {this.className='mfocusnot'}" style="ime-mode:inactive;" /></li>
 							</ul>
-
 							<script>
 								if('{{cook_id}}'!=''){
 									document.querySelector('.loginType').focus();
 								}
 							</script>
 
-							<div class="btn" onclick='loginBtn()'><a class="sbtn">로그인</a></div>
+							<div class="btn"><a onclick='loginBtn()' class="sbtn">로그인</a></div>
 							<div class="chk">
-								<input type="checkbox" id="idsave" name='idsave' value='1' {% if cook_id %}checked{% endif %}/><label for="idsave">아이디 저장</label></div>							
+								<input type="checkbox" id="idsave" name='idsave' value='1'
+								{%if cook_id %}checked{%endif%}
+								/>
+								<label for="idsave">아이디 저장</label>
+							</div>							
 
 							<div class="point">
 								<p>아이디와 비밀번호를 잊으셨나요?</p>
@@ -249,8 +253,7 @@
 							</div>
 						</div>
 					</div>
-					</form>
-
+				</form>
 
 
 					<h3>비회원 주문 조회</h3>
