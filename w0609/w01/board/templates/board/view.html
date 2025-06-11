@@ -8,10 +8,11 @@
 <meta name="description" content="JARDIN SHOP" />
 <meta name="keywords" content="JARDIN SHOP" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scaleable=no" />
+<meta name='csrf-token' content='{{csrf_token}}'>
 <link rel="stylesheet" type="text/css" href="/static/css/reset.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/layout.css?v=Y" />
 <link rel="stylesheet" type="text/css" href="/static/css/content.css?v=Y" />
-<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
 <script type="text/javascript" src="/static/js/left_navi.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
@@ -19,6 +20,8 @@
 <script type="text/javascript" src="/static/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="/static/js/idangerous.swiper-2.1.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.anchor.js"></script>
+<!-- 날짜 포맷함수 -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="/static/js/html5.js"></script>
 <script type="text/javascript" src="/static/js/respond.min.js"></script>
@@ -267,16 +270,102 @@ $(document).ready(function() {
 						</table>
 					</div>
 					<!-- //이전다음글 -->
+					
+					<script>
+						$(function(){
+							csrfToken = $('meta[name="csrf-token"]').attr('content');
+							// 하단 댓글 등록
+							$(".replyBtn").click(function(){
+								if('{{request.session.session_id}}'==''){
+									alert('로그인을 하셔야 하단 댓글 등록이 가능합니다.');
+									location.href='/member/login/';
+									return;
+								}
+
+								alert('하단 댓글을 등록합니다.');
+								console.log('비밀번호 :', $('.replynum').val());
+								console.log('내용 :', $('.replyType').val());
+								console.log('csrf-token : ', $('meta[name="csrf-token"]').attr('content'));
+								// 데이터
+								cpw = $('.replynum').val();
+								ccontent = $('.replyType').val();
+
+								// ajax 데이터 전송
+								$.ajax({
+									url:'/comment/cwrite/',
+									type:'post',
+									headers:{'X-CSRFToken':csrfToken},
+									data:{'cpw':cpw, 'ccontent':ccontent, 'bno':'{{board.bno}}'},
+									success:function(data){
+										console.log(data);
+										cdate = moment(data.comment[0].cdate).format('YYYY-MM-DD HH:mm:ss');	// 날짜포맷변경
+										alert('성공');
+
+										var hdata = ``;
+										hdata += `<ul id='${data.comment[0].cno}'>`;
+										hdata += `<li class="name">{{request.session.session_name}} <span>[ ${data.comment[0].cdate} ]</span></li>`;
+										hdata += `<li class="txt">${data.comment[0].ccontent}</li>`;
+										hdata += `<li class="btn">`;
+										hdata += `<a class="rebtn">수정</a>&nbsp`;
+										hdata += `<a class="rebtn delBtn">삭제</a>`;
+										hdata += `</li>`;
+										hdata += `</ul>`;
+
+										$(".replyBox").prepend(hdata);
+
+										// 하단 댓글 총 개수 추가
+										$('.c_count').text(Number($('.c_count').text())+1);
+										
+										// inputbox 글자 삭제
+										$('.replynum').val();
+										$('.replyType').val();
+									},
+									error:function(){
+										alert('실패');
+									}
+								}); //ajax선언
+							}); //replyBtn
+
+							// 하단 댓글 삭제		.click : 정적 명령어 구문 - 처음 html페이지 있는 것만 삭제 가능
+							// $('.delBtn').click(function(){
+							// .on : 동적 명령어
+							$(document).on('click', '.delBtn', function(){
+								let cno = $(this).closest('ul').attr('id');
+								console.log("현재 위치 :", cno);
+								if(confirm(`${cno}번 게시글을 삭제하시겠습니까?`)){
+									// db 부분 삭제 -> ajax 요청
+									$.ajax({
+										url: '/comment/cdelete/',
+										type: 'post',
+										headers: {'X-CSRFToken':csrfToken},
+										data: {'cno':cno},
+										success: function(data){
+											console.log('넘어온 데이터 : ', data)
+											$(`#${cno}`).remove();
+											// 하단 댓글 총 개수 감소
+											$('.c_count').text(Number($('.c_count').text())-1);
+											alert(`${cno}번 게시글을 삭제했습니다.`);
+										},
+										error: function(){
+											alert('실패');
+										}
+									}); //ajax 선언
+								}	//confirm
+							});
+
+
+						});	//jquery
+					</script>
 
 					<!-- 댓글-->
 					<div class="replyWrite">
 						<ul>
 							<li class="in">
-								<p class="txt">총 <span class="orange">3</span> 개의 댓글이 달려있습니다.</p>
-								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" class="replynum" /></p>
-								<textarea class="replyType"></textarea>
+								<p class="txt">총 <span class="orange c_count">{{comment.count}}</span> 개의 댓글이 달려있습니다.</p>
+								<p class="password">비밀번호&nbsp;&nbsp;<input type="password" name='cpw' class="replynum" /></p>
+								<textarea class="replyType" name='ccontent'></textarea>
 							</li>
-							<li class="btn"><a href="#" class="replyBtn">등록</a></li>
+							<li class="btn"><a class="replyBtn">등록</a></li>
 						</ul>
 						<p class="ntic">※ 비밀번호를 입력하시면 댓글이 비밀글로 등록 됩니다.</p>
 					</div>
@@ -294,15 +383,22 @@ $(document).ready(function() {
 						-->
 
 						<!-- 하단 댓글 입력 부분-->
-						<ul>
-							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
-							<li class="txt">대박!!! 이거 저한테 완전 필요한 이벤트였어요!!</li>
-							<li class="btn">
-								<a href="#" class="rebtn">수정</a>
-								<a href="#" class="rebtn">삭제</a>
-							</li>
-						</ul>
-
+						{% if comment %}
+							{% for c in comment %}
+							<ul id='{{c.cno}}'>
+								<li class="name">{{c.member.name}} <span>[ {{c.cdate|date:'Y-m-d  H:i:s'}} ]</span></li>
+								<li class="txt">{{c.ccontent}}</li>
+								<li class="btn">
+									<a class="rebtn">수정</a>
+									<a class="rebtn delBtn">삭제</a>
+								</li>
+							</ul>
+							{% endfor %}
+						{% else %}
+							<ul>
+								<li>하단 댓글이 없습니다.</li>
+							</ul>
+						{% endif %}
 						<!-- 비밀글
 						<ul>
 							<li class="name">jjabcde <span>[2014-03-04&nbsp;&nbsp;15:01:59]</span></li>
