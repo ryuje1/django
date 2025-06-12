@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='csrf-token' content='{{csrf_token}}'>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>form 게시판</title>
+    <style>
+        table{margin:10px auto; width:1200px;}
+        table, th, td{border:1px solid black; border-collapse:collapse;}
+        th, td{height:40px;}
+        textarea{width:300px; height:100px;}
+    </style>
+    <script>
+        $(function(){
+            cToken = $('meta[name="csrf-token"]').attr('content');
+            // 전체 게시글 가져오기 ajax
+            $.ajax({
+                url:'/ajaxData/blist/',
+                type:'post',
+                headers:{'X-CSRFToken':cToken},
+                data:{'sampleId':'aaa'},
+                success:function(data){
+                    alert('성공');
+                    console.log(data);          // result, list
+                    console.log(data.list);     // list 전체
+                    console.log(data.list[0]);  // list 1개
+                    // data.list 디장고
+                    // 자바스크립트
+                    hdata = ``;
+                    for(let i=0;i<data.list.length;i++){
+                        hdata += `<tr id='${data.list[i].bno}'>
+                                    <td>${data.list[i].bno}</td>
+                                    <td>${data.list[i].btitle}</td>
+                                    <td>${data.list[i].id}</td>
+                                    <td>${data.list[i].bhit}</td>
+                                    <td>${data.list[i].bdate}</td>
+                                    <td>
+                                        <button class='updateBtn'>수정</button>
+                                        <button data-bno='${data.list[i].bno}' class='delBtn'>삭제</button>
+                                    </td>
+                                </tr>`;
+                    }
+                    $('#tbody').html(hdata);
+                },
+                error:function(){
+                    alert('실패');
+                }
+            }); //ajax 선언
+
+            // 게시글 저장 버튼 클릭 시
+            $('.writeBtn').click(function(){
+                alert('게시글을 저장합니다.');
+                let id = $('input[name="id"]').val();
+                let btitle = $('input[name="btitle"]').val();
+                let bcontent = $('textarea[name="bcontent"]').val();
+                console.log(id, btitle, bcontent);
+
+                //ajax 전송
+                $.ajax({
+                url:'/ajaxData/bwrite/',
+                type:'post',
+                headers:{'X-CSRFToken':cToken},
+                data:{'sampleId':'aaa'},
+                success:function(data){
+                    alert('성공');
+                    console.log(data);          // result, list
+                    console.log(data.list);     // list 전체
+                    console.log(data.list[0]);  // list 1개
+                    // data.list 디장고
+                    // 자바스크립트
+                    hdata = ``;
+                    for(let i=0;i<data.list.length;i++){
+                        hdata += `<tr id='${data.board[i].bno}'>
+                                    <td>${data.board[0].bno}</td>
+                                    <td>${data.board[0].btitle}</td>
+                                    <td>${data.board[0].id}</td>
+                                    <td>${data.board[0].bhit}</td>
+                                    <td>${data.board[0].bdate}</td>
+                                    <td>
+                                        <button class='updateBtn'>수정</button>
+                                        <button data-bno='${data.list[i].bno}' class='delBtn'>삭제</button>
+                                    </td>
+                                </tr>`;
+                    }
+                    $('#tbody').prepend(hdata);
+
+                    // 입력된 데이터 삭제
+                    $('input[name="id"]').val('');
+                    $('input[name="btitle"]').val('');
+                    $('textarea[name="bcontent"]').val('');
+                },
+                error:function(){
+                    alert('실패');
+                }
+                }); //ajax 선언
+            }); //writeBtn
+
+            // 게시글 삭제 버튼 클릭 시
+            $(document).on('click','.delBtn',function(){
+                alert('게시글을 삭제합니다.');
+                console.log($(this));
+                console.log($(this).data('bno'));
+                let bno = $(this).data('bno');
+
+                //ajax 전송
+                $.ajax({
+                    url:'/ajaxData/bdelete/',
+                    type:'post',
+                    headers:{'X-CSRFToken':cToken},
+                    data:{'sampleId':'aaa'},
+                    success:function(data){
+                        alert('성공');
+                    },
+                    error:function(){
+                        alert('실패');
+                    }
+                    }); //ajax 선언
+
+                    //html 데이터 삭제
+                    $(`#${bno}`).remove();
+
+                }); //delBtn
+
+        }); //jquery
+    </script>
+</head>
+<body>
+    <h3><a href='/'>ajax 게시판</a></h3>
+    <form action='/board/list/' method='post' name='writefrm'>
+        {% csrf_token %}
+        <label>아이디</label>
+        <input type='text' name='id'><br>
+        <label>제목</label>
+        <input type='text' name='btitle'><br>
+        <label>내용</label>
+        <textarea name='bcontent' width=''></textarea><br>
+        <input type='button' class='writeBtn' value='전송'>
+    </form>
+
+    <table>
+        <colgroup>
+            <col width='12%'>
+            <col width='*'>
+            <col width='12%'>
+            <col width='12%'>
+            <col width='12%'>
+            <col width='12%'>
+        </colgroup>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일</th>
+            <th>버튼</th>
+        </tr>
+        <tbody id='tbody'>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <button class='updateBtn'>수정</button>
+                    <button class='delBtn'>삭제</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
