@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/content.css?v=Y" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="/static/js/top_navi.js"></script>
+<script type="text/javascript" src="/static/js/left_navi.js"></script>
 <script type="text/javascript" src="/static/js/main.js"></script>
 <script type="text/javascript" src="/static/js/common.js"></script>
 <script type="text/javascript" src="/static/js/jquery.easing.1.3.js"></script>
@@ -39,7 +40,7 @@
 				<div id="mnaviClose"><img src="/static/images/btn/btn_mnavi_close.gif" width="44" height="43" alt="메뉴닫기" /></div>
 				<ul>
 					<li><a href="#">EVENT</a></li>
-					<li><a href="#">CUSTOMER</a></li>
+					<li><a href="{% url 'customer:list' %}">CUSTOMER</a></li>
 					<li><a href="#">COMMUNITY</a></li>
 				</ul>
 			</div>
@@ -424,7 +425,7 @@
 
 	</div>
 	<!-- //mainSection -->
-	{% endblock content %}
+    {% endblock content %}
 
 	<div id="footerWrap">
 		<div id="footer">

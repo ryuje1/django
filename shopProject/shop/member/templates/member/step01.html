@@ -74,32 +74,81 @@
 							<col width="*" />
 							</colgroup>
 							<script>
+								//전역변수
+								let emailChk = 0;
+								let confirmChk = 0;
 								let cToken = $('meta[name="csrf-token"]').attr('content');
 
+								// 이메일발송 함수
 								function emailBtn(){
-									alert('전송');
-									let email = $('input[name="email"]').val();
-									console.log('email : ', email)
-									console.log('cToken : ', cToken)
-
+									alert('이메일을 발송합니다.');
+									email = $('input[name="email"]').val();
+									console.log('email : ',email);
+									//email정보 -> 디장고 보냄
+									// url,type,headers,data,success,error
 									$.ajax({
 										url:'/member/emailSend/',
 										type:'post',
 										headers:{'X-CSRFToken':cToken},
 										data:{'email':email},
 										success:function(data){
-											alert('성공');
+											//alert('성공');
+											console.log('data : ',data);
+											emailChk = 1;
 										},
 										error:function(){
 											alert('실패');
 										}
-									}); //ajax
-								} //emailBtn
+									});
+									
+								}//emailBtn
 
+								//랜덤번호 확인
 								function confirmBtn(){
-									alert('확인');
-								} //confirmBtn
-								
+									// 이메일 체크가 되었는지 확인.
+									if (emailChk != 1){
+										alert('이메일 전송을 하셔야 확인이 가능합니다.');
+										$('input[name="email"]').focus();
+										return;
+									}
+									alert('확인')
+									confirmTxt = $('input[name="confirmTxt"]').val()
+									console.log('confirmTxt : ',confirmTxt);
+									//전송번호 -> 디장고 전송
+									$.ajax({
+										url:'/member/confirmChk/',
+										type:'post',
+										headers:{'X-CSRFToken':cToken},
+										data:{'confirmTxt':confirmTxt},
+										success:function(data){
+											//alert('성공');
+											console.log('data : ',data);
+											if(data.msg = 'success'){
+												alert('랜덤 비밀번호가 일치합니다.')
+												confirmChk = 1;
+											}else{
+												alert('랜덤 비밀번호가 일치하지 않습니다. 다시 확인하세요.')
+											}
+										},
+										error:function(){
+											alert('실패');
+										}
+
+									});//ajax
+
+								}//confirmBtn
+
+								function nextBtn(){
+									if (confirmChk != 1){
+										alert('랜덤전송번호가 확인이 되어야 다음으로 진행이 가능합니다.');
+										$('input[name="confirmTxt"]').focus();
+										return false;
+									}else{
+										location.href='/member/step02/';
+									}
+
+									
+								}//nextBtn
 							</script>
 							<tbody>
 								<tr>
