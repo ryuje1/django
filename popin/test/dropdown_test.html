@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>드롭다운 예제 (jQuery)</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 기본 스타일 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width:160px; height:30px;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .dropdown-text {
+            padding: 10px 20px;
+            background:#eee;
+            cursor: pointer;
+            border:2px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dropdown">
+        <div class="dropdown-text" id="dropdownText">전체</div>
+        <div class="dropdown-content">
+            <a href="#" data-option="전체">전체</a>
+            <a href="#" data-option="옵션 1">옵션 1</a>
+            <a href="#" data-option="옵션 2">옵션 2</a>
+            <a href="#" data-option="옵션 3">옵션 3</a>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // 텍스트 클릭 시 드롭다운 메뉴 토글
+            $('#dropdownText').click(function() {
+                $('.dropdown-content').toggle();
+            });
+
+            // 메뉴 항목 클릭 시 텍스트 변경
+            $('.dropdown-content a').click(function(e) {
+                e.preventDefault(); // 링크 기본 동작 방지
+                var selectedOption = $(this).data('option');
+                $('#dropdownText').text(selectedOption);
+                $('.dropdown-content').hide(); // 메뉴 숨기기
+            });
+
+            // 메뉴 외부 클릭 시 드롭다운 닫기
+            $(document).click(function(e) {
+                if (!$(e.target).closest('.dropdown').length) {
+                    $('.dropdown-content').hide();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

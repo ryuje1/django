@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>햄버거 메뉴 테스트</title>
+  <style>
+    /* 기본 설정 */
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    /* 햄버거 버튼 (처음에는 숨김) */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    /* 모바일 사이드 메뉴 (오른쪽에서 슬라이드) */
+    .mobile-sidebar-menu {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: #333;
+      color: white;
+      transition: right 0.3s ease;
+      z-index: 9998;
+      padding-top: 60px;
+    }
+
+    .mobile-sidebar-menu.active {
+      right: 0;
+    }
+
+    .mobile-sidebar-menu ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .mobile-sidebar-menu li {
+      padding: 15px 20px;
+      border-bottom: 1px solid #444;
+    }
+
+    /* 768px 이하일 때 햄버거 버튼 보이게 */
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 햄버거 버튼 -->
+  <button class="mobile-menu-btn" id="menuToggle">☰</button>
+
+  <!-- 슬라이드 메뉴 -->
+  <div class="mobile-sidebar-menu" id="sidebarMenu">
+    <ul>
+      <li>홈</li>
+      <li>게시판</li>
+      <li>포카꾸미기</li>
+      <li>고객지원</li>
+    </ul>
+  </div>
+
+  <script>
+    const menuBtn = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebarMenu');
+
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

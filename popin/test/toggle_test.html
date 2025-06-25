@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배경색 토글 체크박스 여러 개</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery CDN -->
+    <style>
+        .memberToggle { display: none; }
+
+        .members {
+            display: grid;
+            grid-template-rows: repeat(4, 40px);
+            grid-template-columns: repeat(2, 100px);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .members label {
+            font-size: 15px;
+            color: #333;
+            background-color: white;
+            border: 2px solid #e4e4e4;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 35px;
+            transition: all 0.3s ease; /* 부드러운 변화 효과 */
+        }
+
+        
+
+        /* 체크박스가 선택되었을 때 스타일 */
+        .memberToggle:checked + label {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="members">
+        <input type="checkbox" id="member1" class="memberToggle">
+        <label for="member1">전체</label>
+
+        <input type="checkbox" id="member2" class="memberToggle">
+        <label for="member2">멤버 1</label>
+
+        <input type="checkbox" id="member3" class="memberToggle">
+        <label for="member3">멤버 2</label>
+    </div>
+
+    <script>
+        
+    </script>
+</body>
+</html>
