@@ -115,7 +115,7 @@
             transition: left 0.3s ease; /* 슬라이딩 효과 */
             box-shadow: -5px 0 20px rgba(0,0,0,0.1);
             z-index: 9998;
-            padding: 5rem 0 2rem 0;
+            padding: 5rem 0 0 0;
         }
         .mobile-sidebar-menu.active {right:0;}
 
@@ -221,6 +221,7 @@
             border-radius: 5px;
             text-align: center;
             line-height: 35px;
+            cursor:pointer;
             user-select: none;
         }
         .memberToggle:checked + label {
@@ -241,7 +242,7 @@
             display: none;
             position: absolute;
             background-color: #f9f9f9;
-            min-width: 228px;
+            min-width: 254px;
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
             z-index: 1;
             max-height: 150px; /* 드롭다운 최대 높이 설정 */
@@ -267,6 +268,9 @@
         }
 
         .clocation{
+            display:flex;
+            justify-content: space-between;
+            align-items:center;
             border:2px solid #ddd;
             border-radius: 5px;
             margin-top:10px;
@@ -435,7 +439,7 @@
             <a href="#" class="logo"><img src='images/logo.png'>PO-PIN</a>
             <ul class="nav-menu">
                 <li><a href="#home">홈</a></li>
-                <li class="selected"><a href="#exchange">포카교환</a></li>
+                <li><a href="#exchange">포카교환</a></li>
                 <li><a href="#community">커뮤니티</a></li>
                 <li><a href="#decorate">포카꾸미기</a></li>
                 <li><a href="#mypage">마이페이지</a></li>
@@ -496,8 +500,8 @@
                     <div class="dropdown-text" id="dropdownText">전체</div>
                     <div class="dropdown-content">
                         <a href="#" data-option="전체">전체</a>
-                        <a href="#" data-option="옵션 1">옵션 1</a>
-                        <a href="#" data-option="옵션 2">옵션 2</a>
+                        <a href="#" data-option="교환">교환</a>
+                        <a href="#" data-option="판매">판매</a>
                     </div>
                 </div>
             </div>
@@ -514,7 +518,7 @@
             </div>
             <div class="flocation fdiv">
                 <h4>📍 위치 설정</h4>
-                <div class="clocation">강남구 (현재 위치)&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;<a href="#"><i class="fas fa-map"></i></a></div>
+                <div class="clocation">강남구 (현재 위치)<a href="#"><i class="fas fa-map"></i></a></div>
                 <div class="dropdown">
                     <div class="dropdown-text" id="dropdownText3">자주 거래되는 장소</div>
                     <div class="dropdown-content">
@@ -530,8 +534,8 @@
 
         <section class="photocardList">
             <div class="photoGrid">
-                <div class="cardItem">
-                    <img src="images/wonyoung.jpg">
+                <div class="cardItem"><a href="pocadetail.html">
+                    <img src="images/wonyoung.jpg"></a>
                 </div>
                 <div class="cardItem">
                     <img src="images/wonyoung.jpg">
