@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 전체 컨테이너 설정 */
+        .page-header {
+            overflow: hidden; /* 넘치는 부분은 보이지 않게 */
+            height: 100px; /* 각 공지사항의 높이에 맞게 조정 */
+        }
+
+        /* 공지사항들을 감싸는 wrapper */
+        .notice-wrapper {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 개별 공지사항 설정 */
+        .notice {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            opacity: 0; /* 처음에는 보이지 않음 */
+            transition: opacity 1s ease-in-out; /* 부드럽게 전환되는 효과 */
+        }
+
+        /* 첫 번째 공지사항 */
+        .notice:nth-child(1) {
+            animation: fadeIn 1s forwards;
+            animation-delay: 0s; /* 첫 번째 공지사항은 바로 나타남 */
+        }
+
+        /* 두 번째 공지사항 */
+        .notice:nth-child(2) {
+            animation: fadeIn 1s forwards;
+            animation-delay: 10s; /* 10초 후에 나타남 */
+        }
+
+        /* 세 번째 공지사항 */
+        .notice:nth-child(3) {
+            animation: fadeIn 1s forwards;
+            animation-delay: 20s; /* 20초 후에 나타남 */
+        }
+
+        /* 더 많은 공지사항이 있다면 위와 같은 방식으로 nth-child의 번호를 증가시켜 추가 */
+
+        /* 애니메이션: Fade In */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page" id="home">
+        <div class="page-header">
+            <div class="notice-wrapper">
+                <div class="notice">
+                    <div class="notice-content">
+                        <div class="noticetag">NOTICE</div>
+                        <div class="noticetitle">공지사항 1</div>
+                    </div>
+                </div>
+                <div class="notice">
+                    <div class="notice-content">
+                        <div class="noticetag">NOTICE</div>
+                        <div class="noticetitle">공지사항 2</div>
+                    </div>
+                </div>
+                <div class="notice">
+                    <div class="notice-content">
+                        <div class="noticetag">NOTICE</div>
+                        <div class="noticetitle">공지사항 3</div>
+                    </div>
+                </div>
+                <!-- 추가적인 공지사항을 이와 같은 형식으로 추가 -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

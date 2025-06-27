@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=685921f3c75dcb3652a49e7cdce9673d"></script>
     <title>포토카드 상세페이지</title>
     <style>
         * {
@@ -389,16 +390,12 @@
 
         .price {font-size:1.2rem; color:#333; font-weight:600;}
 
-        .post-list{
+        #map{
             width:550px;
             background:rgba(255, 255, 255, 0.95);
             max-height: 300px;
             overflow-y: auto;
             cursor:pointer;
-        }
-
-        .post-list h3{
-            padding:10px;
         }
 
         .post-item{
@@ -648,39 +645,9 @@
             <div class="recent_price">
                 최근 거래가 <div class="price">500원</div>
             </div>
-            <div class="post-list">
-                <h3>거래 내역</h3>
-                <div class="post-item">
-                    <div class="post-content">
-                        <div class="post-title">IVE 원영 포토카드 교환해요!</div>
-                        <div class="post-meta">kpop_lover • 5분 전 • 조회 23<div class="post-category">교환</div></div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-content">
-                        <div class="post-title">IVE 원영 포토카드 판매해요!</div>
-                        <div class="post-meta">kpop_lover • 30분 전 • 조회 38<div class="post-category">판매</div></div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-content">
-                        <div class="post-title">원영 어뮤즈 포토카드 양도</div>
-                        <div class="post-meta">포카러버 • 3일 전 • 조회 50<div class="post-category">거래중</div></div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-content">
-                        <div class="post-title">원영이 포카 구해요</div>
-                        <div class="post-meta">원영러버 • 한달 전 • 조회 107<div class="post-category">거래완료</div></div>
-                    </div>
-                </div>
-                <div class="post-item">
-                    <div class="post-content">
-                        <div class="post-title">원영이 포카</div>
-                        <div class="post-meta">원영러버 • 2달 전 • 조회 314<div class="post-category">거래완료</div></div>
-                    </div>
-                </div>
-            </div>
+            <!-- 지도 -->
+
+
             <div class="pocatrade">
                 <a href="#">교환</a>
                 <a href="#">구매</a>

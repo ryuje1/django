@@ -3,190 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공유 버튼 예시</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <title>공유 버튼</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .share-icon {
-      font-size: 24px;
-      cursor: pointer;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      margin: 20px;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-    }
-
     /* 바텀시트 스타일 */
     .bottom-sheet {
-      position: fixed;
-      bottom: -100%; /* 처음에는 화면 밖에 숨기기 */
-      left: 0;
-      right: 0;
-      background-color: #ffffff;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      padding: 20px;
-      box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease; /* 애니메이션 */
+        position: fixed;
+        left:35.5%;
+        right:0;
+        justify-content: center;
+        bottom: -100%; /* 처음에는 화면 밖에 숨기기 */
+        background-color: #ffffff;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        padding: 20px;
+        box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease; /* 애니메이션 */
+        width:550px; height:100px;
     }
 
     /* 바텀시트가 올라왔을 때 */
     .bottom-sheet.show {
-      bottom: 0; /* 바텀시트가 화면에 나타날 때 */
+        bottom: 0; /* 바텀시트가 화면에 나타날 때 */
+        display:flex; justify-content:space-between; align-items:center;
     }
-
+    
     .share-button {
-      font-size: 16px;
-      cursor: pointer;
-      padding: 10px 20px;
-      margin: 10px 0;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      display: block;
-      width: 100%;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin: 10px 0;
+        background:transparent;
+        color: white;
+        border: none;
+        width:300px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
     }
 
-    .share-button:hover {
-      background-color: #218838;
-    }
+    .share-button img{width: 50px; height:50px; border-radius: 50%; object-fit:cover;}
+
+    .share-button i{width: 50px; height:50px; background: #eee; border-radius: 50%; 
+                    color:black; font-size:1rem; text-align: center; line-height:48px;}
 
     /* 바텀시트 외부 영역 */
     .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: none; /* 기본적으로 숨기기 */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2);
+        display: none; /* 기본적으로 숨기기 */
     }
 
     .overlay.show {
-      display: block; /* 바텀시트가 열리면 오버레이가 보이도록 */
-    }
-
-    /* 모달 스타일 */
-    .modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%); /* 화면 중앙에 위치 */
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      display: none; /* 처음에는 숨기기 */
-      z-index: 999;
-      width: 80%;
-      max-width: 400px;
-    }
-
-    .modal .modal-button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .modal .confirm-btn {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .modal .cancel-btn {
-      background-color: #ccc;
+        display: block; /* 바텀시트가 열리면 오버레이가 보이도록 */
     }
   </style>
+  <script>
+    $(document).ready(function() {
+      // 공유하기 //
+        const url = "https://example.com"; // 공유할 URL
+        const text = "이 웹사이트를 공유합니다!"; // 공유할 텍스트
+        // 바텀시트 토글 (공유하기 아이콘 클릭 시 바텀시트 나타나게)
+        $(".share-icon").click(function() {
+            $(".bottom-sheet").toggleClass("show"); // 바텀시트 보이기
+            $(".overlay").toggleClass("show"); // 오버레이 보이기
+            $("body").css("overflow", "hidden"); // 스크롤 숨기기
+        });
+        // 바텀시트 외부 클릭 시 바텀시트 닫기
+        $(".overlay").click(function() {
+            $(".bottom-sheet").removeClass("show"); // 바텀시트 숨기기
+            $(".overlay").removeClass("show"); // 오버레이 숨기기
+            $("body").css("overflow", "auto"); // 스크롤 다시 활성화
+        });
+        // X로 공유하기
+        $(".shareToX").click(function(){
+          if (isMobileDevice()) {
+                window.location.href = `twitter://intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+            } else {
+                window.open(
+                    `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`,
+                    '_blank', 'width=600,height=400');
+            }
+        });
+        // 카카오톡으로 공유하기
+        $(".shareToKakao").click(function(){
+          if (isMobileDevice()) {
+                window.location.href = `kakaotalk://send?text=${encodeURIComponent(text)} ${encodeURIComponent(url)}`;
+            } else {
+                window.open(
+                    `https://kauth.kakao.com/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code`,
+                    '_blank', 'width=600,height=400');}
+        });
+        // 링크 복사
+        $(".copyLink").click(function(){
+            const tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            tempInput.value = url;  // 클립보드에 복사할 URL 설정
+            tempInput.select();
+            document.execCommand("copy"); // 클립보드로 복사
+            document.body.removeChild(tempInput);
+
+            alert("링크가 클립보드에 복사되었습니다!"); // 복사 완료 알림
+        });
+        // 모바일 여부 체크 함수
+        function isMobileDevice() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+    });
+  </script>
 </head>
 <body>
-
-  <!-- 공유하기 아이콘 -->
-  <button class="share-icon">공유하기</button>
-
+  <h3>공유하기 테스트</h3>
+  <i class="fal fa-share-square share-icon"></i>
   <!-- 오버레이 (바텀시트 외부) -->
-  <div class="overlay" id="overlay"></div>
+  <div class="overlay" id="overlay" onclick="toggleBottomSheet()"></div>
 
   <!-- 바텀시트 내용 -->
   <div class="bottom-sheet" id="bottomSheet">
-    <button class="share-button" onclick="showModal('twitter')">트위터로 공유</button>
-    <button class="share-button" onclick="showModal('kakao')">카카오톡으로 공유</button>
-    <button class="share-button" onclick="copyLink()">링크 복사</button>
+      <div class="share-button shareToX"><img src="images/x_logo.png"></div>
+      <div class="share-button shareToKakao"><img src="images/kakao_logo.png"></div>
+      <div class="share-button copyLink"><i class="fal fa-link"></i></div>
   </div>
-
-  <!-- 모달 창 -->
-  <div class="modal" id="modal">
-    <p>이 사이트로 이동하시겠습니까?</p>
-    <button class="modal-button confirm-btn" id="confirmBtn">확인</button>
-    <button class="modal-button cancel-btn" id="cancelBtn">취소</button>
-  </div>
-
-  <script>
-    const url = "https://example.com"; // 공유할 URL
-    const text = "이 웹사이트를 공유합니다!"; // 공유할 텍스트
-
-    // 바텀시트 토글 (공유하기 아이콘 클릭 시 바텀시트 나타나게)
-    $(".share-icon").click(function() {
-      $(".bottom-sheet").toggleClass("show"); // 바텀시트 보이기
-      $(".overlay").toggleClass("show"); // 오버레이 보이기
-    });
-
-    // 바텀시트 외부 클릭 시 바텀시트 닫기
-    $(".overlay").click(function() {
-      $(".bottom-sheet").removeClass("show"); // 바텀시트 숨기기
-      $(".overlay").removeClass("show"); // 오버레이 숨기기
-    });
-
-    // 공유 버튼 클릭 시 모달 띄우기
-    function showModal(platform) {
-      $("#modal").fadeIn(); // 모달 보이기
-      $("#overlay").fadeIn(); // 오버레이 보이기
-
-      // 확인 버튼 클릭 시 해당 사이트로 이동
-      $("#confirmBtn").off('click').on('click', function() {
-        if (platform === 'twitter') {
-          window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
-        } else if (platform === 'kakao') {
-          window.open(`https://kauth.kakao.com/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code`, '_blank');
-        }
-        closeModal(); // 모달 닫기
-      });
-
-      // 취소 버튼 클릭 시 모달 닫기
-      $("#cancelBtn").off('click').on('click', function() {
-        closeModal(); // 모달 닫기
-      });
-    }
-
-    // 모달 닫기
-    function closeModal() {
-      $("#modal").fadeOut(); // 모달 숨기기
-      $("#overlay").fadeOut(); // 오버레이 숨기기
-    }
-
-    // 링크 복사
-    function copyLink() {
-      const tempInput = document.createElement("input");
-      document.body.appendChild(tempInput);
-      tempInput.value = url;  // 클립보드에 복사할 URL 설정
-      tempInput.select();
-      document.execCommand("copy"); // 클립보드로 복사
-      document.body.removeChild(tempInput);
-
-      alert("링크가 클립보드에 복사되었습니다!"); // 복사 완료 알림
-    }
-  </script>
-
 </body>
 </html>
