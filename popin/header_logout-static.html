@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <title>포토카드 상세페이지</title>
+    <title>{% block title %}header logout{% endblock %}</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +24,7 @@
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
+            padding: 1rem 3rem;
             box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
@@ -40,7 +40,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display:block;
-            width:250px;
+            width:230px;
         }
 
         .logo img{
@@ -52,12 +52,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            width:1100px;
             margin: 0 auto;
         }
 
         .nav-menu {
             display: flex;
+            justify-content: center;
             gap: 1.5rem;
             list-style: none;
             width:400px;
@@ -95,7 +96,7 @@
         .auth-buttons {
             display: flex;
             gap: 1rem;
-            width:250px;
+            width:230px;
         }
 
         .btn {
@@ -131,13 +132,6 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-right:15px;
         }
 
         /* 모바일 메뉴 */
@@ -209,106 +203,41 @@
             transform: translateX(5px);
         }
 
-        .mobile-user-info {
-            display:flex;
-            position:fixed;
-            top:25px;
-            left:32px;
-            font-weight:600;
-            font-size:22px;
+        .mobile-auth-buttons {
+            position: sticky;
+            bottom: 0;
+            left: 2rem;
+            right: 2rem;
+            margin: 2rem 2rem 0 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 2rem 0;
         }
 
-        .mobile-user-info > .username {
-            margin-right:10px;
-        }
-
-        .mobile-user-info > .alarm {
-            line-height: 33px;
-        }
-
-        .alarm {
-            font-size:18px;
-        }
-
-        .content {
-            background: rgba(255, 255, 255, 0.95);
-            width:100%;
-            max-width:1200px;
-            display:flex;
-            margin:0 auto;
-            margin-top: 40px;
-            margin-bottom: 40px;
-            border-radius: 20px;
-            padding:20px;
-        }
-
-        .post-list{
-            width:100%;
-            /*
-            max-height: 900px;
-            overflow-y: auto;
-            */
-            cursor:pointer;
-        }
-
-        .post-list h2{padding:20px;}
-
-        .post-item {
-            padding: 15px 10px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .post-item:last-child {
-            border-bottom: none;
-        }
-
-        .post-title {
-            font-size: 16px;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .post-meta {
-            color: #666;
-            font-size: 14px;
-            display:flex;
-            justify-content: space-between;
-        }
-
-        .post-category {
-            background: #e8f0fe;
-            color: #667eea;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+        .mobile-auth-buttons .btn {
+            width: 100%;
             text-align: center;
-            width:70px;
+            justify-self: stretch;
         }
 
         /* 반응형 디자인 */
         @media (max-width: 768px) {
             .nav {
                 position: relative;
+                width:100%;
             }
             
-            .nav-menu,
-            .auth-buttons {
+            .nav-menu{
                 display: none;
             }
-            
+
+            .auth-buttons {display:none;}
+
             .mobile-menu-btn {
                 display: block;
             }
-
-            .content{margin-top:0; margin-bottom:0;}
-
-            .content_background{width:90%;}
-
-            .recent_price, .post-list, .pocatrade{width:100%;}
-
-            .bottom-sheet {left:0; width:100%;}
         }
 
         @media (max-width: 480px) {
@@ -369,76 +298,37 @@
     <!-- 헤더 -->
     <header class="header">
         <nav class="nav">
-            <a href="#" class="logo"><img src='images/logo.png'>PO-PIN</a>
+            <a href="#" class="logo"><img src='/static/images/landing/logo.png'>PO-PIN</a>
             <ul class="nav-menu">
                 <li><a href="#home">홈</a></li>
                 <li><a href="#exchange">포카교환</a></li>
                 <li><a href="#community">커뮤니티</a></li>
                 <li><a href="#decorate">포카꾸미기</a></li>
-                <li><a href="#mypage">마이페이지</a></li>
+                <li><a href="#customer">고객지원</a></li>
             </ul>
-            <div class="user-info">
-                    <div class="username"><span>포카러버123</span>님</div>
-                    <div class="alarm">🔔</div>
+            <div class="auth-buttons">
+                <a href="#login" class="btn btn-outline">로그인</a>
+                <a href="#signup" class="btn btn-primary">회원가입</a>
             </div>
             <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
             
             <!-- 모바일 메뉴 -->
             <div class="mobile-menu" id="mobileMenu">
-                <div class="mobile-user-info">
-                    <div class="username"><span>포카러버123</span>님</div>
-                    <div class="alarm">🔔</div>
-                </div>
                 <ul class="mobile-menu-list">
                     <li><a href="#home">홈</a></li>
                     <li><a href="#exchange">포카교환</a></li>
                     <li><a href="#community">커뮤니티</a></li>
                     <li><a href="#decorate">포카꾸미기</a></li>
-                    <li><a href="#mypage">마이페이지</a></li>
+                    <li><a href="#customer">고객지원</a></li>
                 </ul>
+                <div class="mobile-auth-buttons">
+                    <a href="#login" class="btn btn-outline">로그인</a>
+                    <a href="#signup" class="btn btn-primary">회원가입</a>
+                </div>
             </div>
         </nav>
     </header>
-    <div class="content">
-        <div class="post-list">
-            <h2>최신 게시글</h2>
-            <div class="post-item">
-                <div class="post-content">
-                    <div class="post-title">IVE 원영 포토카드 교환해요!</div>
-                    <div class="post-meta">kpop_lover • 5분 전 • 조회 23<div class="post-category">교환</div></div>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-content">
-                    <div class="post-title">IVE 원영 포토카드 판매해요!</div>
-                    <div class="post-meta">kpop_lover • 30분 전 • 조회 38<div class="post-category">판매</div></div>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-content">
-                    <div class="post-title">BLACKPINK 리사 포토카드 나눔합니다</div>
-                    <div class="post-meta">generous_fan • 12분 전 • 조회 45<div class="post-category">나눔</div></div>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-content">
-                    <div class="post-title">BTS 정국 포토카드 대리구매 가능하신분?</div>
-                    <div class="post-meta">army_collector • 23분 전 • 조회 67<div class="post-category">대리구매</div></div>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-content">
-                    <div class="post-title">오늘 교환 후기 - 정말 만족스러워요!</div>
-                    <div class="post-meta">happy_trader • 1시간 전 • 조회 112<div class="post-category">후기</div></div>
-                </div>
-            </div>
-            <div class="post-item">
-                <div class="post-content">
-                    <div class="post-title">IVE 안유진 포토카드 꾸미기 완성!</div>
-                    <div class="post-meta">creative_diver • 35분 전 • 조회 89<div class="post-category">포꾸</div></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% block content %}
+    {% endblock content %}
 </body>
 </html>
